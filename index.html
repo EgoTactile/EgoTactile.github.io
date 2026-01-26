@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>EgoPressDiff</title>
+    <title>EgoTactile</title>
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,13 +20,13 @@
     <meta property="og:image:height" content="682">
     <meta property="og:type" content="website" />
     <meta property="og:url" content=""/>
-    <meta property="og:title" content="EgoPressDiff" />
-    <meta property="og:description" content="Project page for EgoPressDiff" />
+    <meta property="og:title" content="EgoTactile" />
+    <meta property="og:description" content="Project page for EgoTactile" />
 
         <!--TWITTER-->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="EgoPressDiff" />
-    <meta name="twitter:description" content="Project page for EgoPressDiff." />
+    <meta name="twitter:title" content="EgoTactile" />
+    <meta name="twitter:description" content="Project page for EgoTactile." />
     <meta name="twitter:image" content="" />
 
 
@@ -83,30 +83,35 @@
     <div class="container" id="main" style="width: 85%;">
     <!-- <div class="container" id="main"> -->
         <h2 class="col-md-8 col-md-offset-2 text-center" style="font-size: 28px; font-weight: bold; line-height: 1.5; color: #333;">
-            <span style="color: #007BFF;">EgoPressDiff</span>: Conditional Video Diffusion for Continuous Hand Pressure Estimation from Egocentric Views
+            <span style="color: #007BFF;">EgoTactile</span> : Learning Grasp Pressure for Everyday Objects from Egocentric Video
         </h2>
         </div>
+        
         <!-- Make sure you include Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-
         <div class="row">
             <div class="col-md-8 col-md-offset-2 text-center">
-                <h3>
-                    <em>Anonymous Submission</em>
-                </h3>
+            <h3 style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500; color: #333; font-size: 18px;">
+                Anonymous Submission
+            </h3>
             </div>
         </div>
-
+        
         <div class="row">
             <div class="col-md-8 col-md-offset-2  text-center">
-                <ul class="list-inline">
-                    <li>
-                        <a class="btn btn-dark github-pill" href="https://anonymous.4open.science/r/EgoPressDiff/README.md" target="_blank" role="button">
-                            <i class="fab fa-github"></i> Code
-                        </a>
-                    </li>
-                </ul>
+            <ul class="list-inline">
+                <li>
+                <a class="btn btn-dark github-pill" href="https://anonymous.4open.science/r/EgoPressureDiff-4DCB/README.md" target="_blank" role="button">
+                    <i class="fab fa-github"></i> Code
+                </a>
+                </li>
+                <li>
+                <a class="btn btn-dark github-pill" href="https://huggingface.co/datasets/icml-2026-submission/EgoTactile" target="_blank" role="button">
+                    <i class="fa-solid fa-database"></i> Hugging Face
+                </a>
+                </li>
+            </ul>
             </div>
         </div>
 
@@ -118,285 +123,424 @@
                     Abstract
                 </h3>
                 <p class="text-justify">
-                    Estimating hand-surface contact pressure from an egocentric view is crucial for AR/VR devices, robotic imitation, and ergonomic analysis. Existing methods often discretize pressure signal and process frames independently, leading to quantization errors and temporal inconsistencies.
-                    We present <b>EgoPressDiff</b>, a conditional video diffusion framework that generates UV-pressure maps from visual input.
-                    The core of our approach is a multi-modal conditioning strategy, introducing a PoseNet and a Vertex Encoder to efficiently extract features from hand pose and 3D mesh vertices. These signals, along with depth information, guide the generative process to ensure the pressure fields are physically grounded. To effectively fuse these heterogeneous features, we further propose a Distribution-Calibrated Spatial Layer, which aligns their statistical properties before combination.
-                    Evaluated on the EgoPressure ego-view setting, EgoPressDiff achieves state-of-the-art results, improving Volumetric IoU by over 34% relative to prior baseline, while reducing MAE and maintaining high temporal accuracy.
+                    Estimating full-hand grasp pressure from egocentric video is critical for immersive VR and robotic manipulation, yet dense tactile sensing often relies on intrusive hardware. 
+                    Existing vision-based methods predominantly rely on planar surfaces or fingertip contacts, failing to generalize to complex 3D object interactions. 
+                    Therefore, we introduce EgoTactile, a benchmark pairing egocentric video with full-hand pressure supervision for diverse everyday objects, incorporating a bare-hand transfer subset to enable generalization to natural scenarios. 
+                    Leveraging this benchmark, we first establish EgoPressureFormer as a discriminative baseline. Beyond this, to explicitly address the uncertainty in partial observations, we propose EgoPressureDiff, a conditional diffusion framework that adapts a large-scale pre-trained video diffusion backbone. By combining rich world knowledge priors with a Physically-Informed Feature Rectification layer to inject semantic constraints, our approach effectively hallucinates plausible contact patterns and resolves visual-physical ambiguities. 
+                    Extensive experiments demonstrate that our method achieves superior performance on the benchmark and robust transferability to in-the-wild scenarios.
                 </p>
             </div>
         
             <!-- 右侧图像部分 -->
-            <div class="col-md-4 col-md-offset-0 text-center" style="margin-top: 30px;">
-                <img width="90%" src="assets/teaser.png" class="img-responsive" alt="teaser">
-                <p style="margin-top: 10px; font-size: 14px; color: #555; text-align: left;">
-                    <strong>Figure 1:</strong> EgoPressDiff generates dynamic hand pressure from a single egocentric RGB video. It outputs a sequence of UV-pressure maps that could be warpped onto the 3D MANO model for intuitive 3D visualization of contact forces. The "Side View" is provided to better illustrate the hand’s contact with the touchpad.
+            <div class="col-md-4 col-md-offset-0" style="margin-top: 80px;">
+                <div style="width: 70%; margin: 0 auto;">
+                    <img src="assets/task_overview.png" class="img-responsive" alt="teaser" style="width: 100%; margin: 0 auto;">
+                </div>
+
+                <p style="margin-top: 10px; font-size: 14px; color: #555; width: 100%; text-align: left;">
+                    <strong>Figure 1:</strong> Task overview. Given an input RGB clip, the model predicts a pressure sequence or heatmap, optionally leveraging auxiliary Condition Info (e.g., masks and text metadata) to resolve physical ambiguities. The output is represented in two inter-convertible formats: a sparse sensor sequence and a dense spatial heatmap.
                 </p>
             </div>
         </div>
 
-        <div class="row">
+
+        <!-- <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h3 style="font-weight: bold;">
-                    A. Network Architecture
-                </h3>
-                <p class="text-justify">
-                    The training pipeline of our method is illustrated in Figure 2 (a). 
-                    The network consists of several key components, including the <b>PoseNet, Vertex Encoder, and Distribution-Calibrated (DC) Spatial Layer</b>. 
-                    These modules work together to extract, fuse, and align multi-modal features. 
-                    First, PoseNet is employed to extract hand pose features, which are added to the input latent to explicitly enhance the model's awareness of the hand's posture. 
-                    Second, since depth information is critical for inferring hand contact with the environment, 
-                    we use VAE to encode the depth maps, projecting its features into the same feature space as input latents. 
-                    To further capture the hand's spatial structure, 
-                    we propose a Vertex Encoder that uses the 3D vertex coordinates of the MANO hand model as a geometric prior, 
-                    enabling the model to learn the correlation between 3D hand geometry and pressure. Furthermore, a CLIP image encoder processes the egocentric RGB frames. 
-                    The resulting image embeddings serve a dual purpose: they provide global visual context and, within the DC Spatial Layer, 
-                    calibrate the distribution of hand-vertex embeddings, ensuring distributional consistency across modalities.
-                    In what follows, we will present the architectural details of these key components.                 
-                </p>
-
-                <br>
-                <img width="80%" src="assets/pipeline.png" class="img-responsive" alt="pipeline" style="margin:auto">
-                <p style="margin-top: 10px; font-size: 14px; color: #555; text-align: left;">
-                    <strong>Figure 2:</strong> Overview of EgoPressDiff.
-                    <b>(a)</b> The training pipeline of EgoPressDiff. 
-                    The model processes five input streams through dedicated encoders: 
-                    a PoseNet for hand pose, a VAE for depth and UV-pressure, a CLIP image encoder for RGB frames, and a Vertex Encoder for hand vertices. 
-                    To align features from the vertex and image embeddings, we introduce a DC Spatial Layer, which replaces the original spatial layer in the U-Net. 
-                    The pipeline is trained end-to-end using a reconstruction loss, with a UV mask employed to up-weight the hand UV pixels.
-                    <b>(b)</b> The architecture of Vertex Encoder.
-                    <b>(c)</b> The architecture of PoseNet.
-                    <b>(d)</b> Visualization of the reconstruction target, from top to bottom: The input egocentric RGB image with 3D MANO hand mesh; 
-                    A 3D visualization of the ground-truth pressure on the hand surface; The pressure represented as a texture on the unwrapped UV layout;
-                    The final 2D UV-pressure map, which serves as the reconstruction target. 
-                </p>
-                <br>
-
-                <div style="margin-left: 40px;">
-                    <h4 style="font-weight: bold;">(1) Vertex Encoder.</h4>
-                    <p class="text-justify">
-                        <p>
-                            To extract a compact and coherent representation from MANO hand vertices, we propose a Vertex Encoder. 
-                            The input is a sequence of hand-mesh vertices with shape (B, N, 778, 3), where B, N, 778, and 3 correspond to batch size, number of frames, number of vertices, and (x,y,z) coordinates. 
-                            The encoder outputs a feature sequence of shape (B, N, 1024). As shown in Figure 2 (b), the process has three stages:
-                            </p>
-                            <ol>
-                              <li>
-                                <b>Spatial feature extraction:</b> Each frame is normalized to remove global translation and scale. 
-                                A shared MLP maps the 3D coordinates to a higher-dimensional space, followed by symmetric max-pooling to form a frame-level embedding.
-                              </li>
-                              <li>
-                                <b>Temporal feature mixing:</b> The embeddings are processed by depthwise-separable convolution blocks, capturing local temporal dynamics efficiently.
-                              </li>
-                              <li>
-                                <b>Projection:</b> A linear layer with LayerNorm projects the features to the final 1024-dimensional representation.
-                              </li>
-                            </ol>
-                            <p>
-                            This hierarchical design enables efficient distillation of MANO vertex data into structured features suitable for denoising models.
-                            </p>
-                    </p>
-                </div>
+              <h3 style="font-weight: bold;">
+                A. Task and Pressure Formulation
+              </h3>
+              <p class="text-justify">
+                We study <em>egocentric grasp pressure prediction</em>, where the input is a fixed-length monocular RGB clip
+                \(X=\{x_t\}_{t=1}^T\) sampled from an egocentric video stream, and the output is the per-frame pressure distribution during hand–object interaction. Optionally, the model can be conditioned on auxiliary signals
+                \(C\), including per-frame segmentation masks \(m_t\) and clip-level text attributes that summarize object properties (e.g., weight, material) and subject attributes (e.g., age, gender, body fat), providing structured priors beyond raw pixels under occlusion and physical ambiguity.
+                The target pressure at each time step is represented in two inter-convertible forms: (i) a sparse glove sensor vector \(p_t \in \mathbb{R}^M\) with \(M=162\) taxels, and (ii) a dense, hand-centric heatmap
+                \(H_t \in \mathbb{R}^{S\times S}\) on a canonical canvas, with non-hand regions set to zero; predictions may be produced in either form and deterministically converted for unified evaluation.
+                To address sensor noise and the large dynamic range, raw pressures are normalized to \([0,1]\) by zeroing values below \(p_{\min}=5\)N and scaling by a robust upper bound \(p_{\max}=200\)N (99.9th percentile), with clipping for outliers.{index=3}
+                Conversion between modalities is implemented via a fixed linear rendering operator \(A\) (Gaussian diffusion on a canonical hand geometry) to project \(p_t\) into a heatmap, and an inverse recovery solved by ridge regression to map predicted heatmaps back to sensor space for evaluation.
+                All methods are ultimately evaluated on aligned pressure sequences, reporting Temporal Accuracy for contact/non-contact dynamics, Contact IoU and Volumetric IoU for overlap of (thresholded and magnitude-aware) contact patterns, MAE for absolute pressure error, and a Part-wise Center-of-Pressure (CoP) Error to assess anatomical localization on fingertips and palm.
+              </p>
+            </div>
+        </div> -->
         
-                <div style="margin-left: 40px;">
-                    <h4 style="font-weight: bold;">(2) PoseNet.</h4>
+        
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h3 style="font-weight: bold;">
+                A. EgoTactile Benchmark
+              </h3>
+              <p class="text-justify">
+                EgoTactile benchmarks egocentric <em>full-hand</em> grasp pressure prediction by synchronizing wearable RGB video with high-resolution tactile measurements. The capture system records 1280×720 egocentric video at 30 fps (head- and neck-mounted viewpoints) together with a 162-sensor pressure glove (0–350 N, ~17 Hz), collected in a controlled green-screen setup with randomized lighting and object poses to improve robustness.
+                To support both direct supervision and real-world transfer, the benchmark contains (i) a <strong>gloved-hand</strong> set where the pressure glove is visible and paired with synchronized pressure labels, and (ii) a <strong>bare-hand</strong> set where the visible hand is bare while an off-camera gloved hand performs a synchronized grasp to provide labels, guided by a metronome with varied tempo to avoid shortcut learning.
+                The dataset spans 63 everyday objects across 7 categories and 12 participants (balanced gender), and includes anonymized object/subject metadata (e.g., weight/material/fill state; age/body weight/body fat/hand length) for controlled analysis and optional conditioning.
+                Benchmark protocols evaluate both <strong>object generalization</strong> (Object-Held-Out) and <strong>cross-subject robustness</strong> (Subject-Held-Out) on the gloved-hand set, and Object-Held-Out transfer on the bare-hand set.
+              </p>
+          
+              <br>
+                <img width="95%" src="assets/dataset_overview.png" class="img-responsive" alt="pipeline" style="margin:auto">
+                <p style="margin-top: 10px; font-size: 14px; color: #555; text-align: left;">
+                    <strong>Figure 2:</strong>
+                    Data collection setup and dataset statistics. Left: Our capture environment features controlled lighting and a green-screen background (a), and (b) illustrates the data collection scenario for bare-hand setting. To ensure viewpoint diversity and realistic transfer, we capture data using both head-mounted (c) and neck-mounted (d) cameras.   Right: Statistics of the collected data, including hand contact probability (e), average pressure heatmaps (g) and force magnitude distributions across objects (f) and participants (h).
+                </p>
+                <br>
+            </div>
+        </div>
+                  
+
+
+
+        <div class="row">
+            <!-- Baselines -->
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h3 style="font-weight: bold;">B. Baselines</h3>
+
+                    <h4 style="font-weight: bold;">Baseline I: EgoPressureFormer</h4>
                     <p class="text-justify">
-                        Many generative models integrate human pose features via ControlNet, but this adds significant computational cost. 
-                        We propose a lightweight PoseNet for extracting hand pose map features. 
-                        As shown in Figure 2 (c), PoseNet consists only of convolutional and SiLU layers. 
-                        For stable training, the network uses Gaussian weight initialization, and its final projection layer is a zero-initialized convolution.
+                        As a discriminative video-to-pressure sequence predictor, EgoPressureFormer builds on a TimeSformer backbone and avoids dense pixel-aligned heatmap regression under occlusion by using a query-based decoder: learnable sensor embeddings attend to spatiotemporal visual tokens to directly predict the full M-sensor pressure sequence. Training further mitigates contact sparsity via a multi-task objective combining per-sensor classification with a frame-level contact gate. However, as a deterministic regressor, it struggles to model the multi-modal distribution of pressure under severe occlusion.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- 左侧文本部分 -->
+                <div class="col-md-4 col-md-offset-2">
+                    <h4 style="font-weight: bold;">Baseline II: EgoPressureDiff</h4>
+                    <p class="text-justify">
+                        We cast egocentric pressure estimation as <em>conditional latent diffusion</em> to handle the inherent multi-modality caused by severe occlusion: multiple plausible pressure patterns can explain the same visible pixels, making deterministic regression ill-posed. EgoPressureDiff adapts a pre-trained Stable Video Diffusion (SVD) backbone to synthesize pressure heatmap sequences by denoising pressure latents conditioned on the RGB video, with both RGB clips and pressure heatmaps encoded into a shared latent space via SVD’s VAE and fused by channel concatenation in the denoiser.
+                        As summarized in <strong>Figure 3 (EgoPressureDiff Training Pipeline)</strong>, the model further incorporates three complementary guidance signals to disambiguate contact: (i) <em>hint masks</em> as a structured spatial prior (processed by a lightweight Mask Encoder and injected into the latent input), (ii) <em>text prompts</em> encoding object/subject physical attributes, and (iii) a <em>pressure-heatmap prototype</em> providing an anatomical topology prior of where pressure can plausibly appear.
                     </p>
                 </div>
 
-                <div style="margin-left: 40px;">
-                    <h4 style="font-weight: bold;">(3) Distribution-Calibrated Spatial Layer.</h4>
-                    <p class="text-justify">
-                        <p>
-                            To integrate multimodal control signals, we introduce the DC Spatial Layer. 
-                            As shown in Figure 3 (a), unlike a standard diffusion U-Net spatial layer that conditions features on text, our design uses dual branches for image and vertex embeddings. 
-                            Because these embeddings lie in different feature spaces, we add a calibration block to align them before fusion.
-                            Let <b>z</b> be the latent input. After self-attention, <b>z</b> passes through two cross-attention blocks, yielding <b>z<sup>img</sup></b> and <b>z<sup>vtx</sup></b>. 
-                            We compute their channel-wise mean and standard deviation: 
-                            (<b>μ<sub>img</sub>, σ<sub>img</sub></b>) and (<b>μ<sub>vtx</sub>, σ<sub>vtx</sub></b>). 
-                            We align them by enforcing:
-                            \[
-                            \frac{z^{img} - \mu_{img}}{\sigma_{img}} = \frac{z^{vtx} - \mu_{vtx}}{\sigma_{vtx}}
-                            \]
-                            From this, we derive the calibrated vertex latent:
-                            \[
-                            \bar{z}^{vtx} = \frac{z^{vtx} - \mu_{vtx}}{\sigma_{vtx}} \times \sigma_{img} + \mu_{img}
-                            \]
-                            Finally, the calibrated <b>z̄<sup>vtx</sup></b> is fused with <b>z<sup>img</sup></b> via element-wise addition and passed to the next temporal layer.
-                        </p>                            
+                <!-- 右侧图像部分：图片 80% 居中；caption 用右侧列的全宽 -->
+                <div class="col-md-4 col-md-offset-0" style="margin-top: 30px;">
+                    <div style="width: 60%; margin: 0 auto;">
+                        <img src="assets/egopressdiff_pipeline.png" class="img-responsive" alt="teaser" style="width: 100%; margin: 0 auto;">
+                    </div>
+
+                    <p style="margin-top: 10px; font-size: 14px; color: #555; width: 100%; text-align: left;">
+                        <strong>Figure 3:</strong> EgoPressureDiff Training Pipeline. We formulate pressure estimation as a latent diffusion process conditioned on egocentric RGB video. To resolve physical ambiguities, we incorporate multi-modal guidance via: (i) a hint mask processed by a trainable Mask Encoder, and (ii) text prompts and a prototype heatmap injected through the proposed PIFR Layer.
                     </p>
-
-                    <br>
-                        <img width="50%" src="assets/DCSL.png" class="img-responsive" alt="pipeline" style="margin:auto">
-                        <p style="margin-top: 10px; font-size: 14px; color: #555; text-align: left;">
-                            <strong>Figure 3:</strong> <b>(a)</b> The original U-Net block. <b>(b)</b> Our proposed Distribution-Calibrated (DC) Spatial Layer integrated into the U-Net block. 
-                                Here, &mu; and &sigma; denote the mean and standard deviation, respectively.
-                        </p>
-                    <br>
-
                 </div>
-                
+            </div>
+
+            <div class="row">
+                <!-- 左侧文本部分 -->
+                <div class="col-md-4 col-md-offset-2">
+                    <h4 style="font-weight: bold;">
+                        Physically-Informed Feature Rectification (PIFR) layer
+                    </h4>
+                    <p class="text-justify">
+                        A key challenge is that naive fusion of text (physically informative but spatially coarse) and prototypes (topologically stable but weak on magnitude) can yield unstable or physically implausible intensities, with the denoiser over-relying on the prototype. To address this, EgoPressureDiff introduces the <strong>Physically-Informed Feature Rectification (PIFR)</strong> module, which uses text-conditioned features to <em>rectify</em> the prototype-conditioned representation before it conditions SVD. Concretely (Figure 4), an intermediate denoiser feature map attends to prototype tokens and text tokens to form prototype-conditioned and text-conditioned features; a lightweight mapping network predicts affine modulation parameters <span style="font-style: italic;">&gamma;</span> and <span style="font-style: italic;">&beta;</span> from the text-conditioned feature, and applies them to calibrate the prototype-conditioned feature, preserving anatomical plausibility while injecting magnitude constraints implied by physical attributes. 
+                    </p>
+                </div>
+            
+                <!-- 右侧图像部分：图片 80% 居中；caption 用右侧列的全宽 -->
+                <div class="col-md-4 col-md-offset-0" style="margin-top: 30px;">
+                    <div style="width: 70%; margin: 0 auto;">
+                        <img src="assets/PIFR_layer.png" class="img-responsive" alt="teaser" style="width: 100%; margin: 0 auto;">
+                    </div>
+
+                    <p style="margin-top: 10px; font-size: 14px; color: #555; width: 100%; text-align: left;">
+                        <strong>Figure 4:</strong> (a) The original U-Net block of SVD. (b) Our proposed PIFR layer integrated into the U-Net block. Here, <span style="font-style: italic;">&gamma;</span> and <span style="font-style: italic;">&beta;</span> denote the scale and shift factor, respectively.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+          
+
+        <div class="row"> 
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;">
+                    C. Comparisons with Baselines
+                </h3>
+                <p class="text-justify">
+                    Below we present qualitative hand-pressure prediction results produced by the baseline methods proposed in this paper on the same video clip. For PressureVision and EgoPressureFormer, the predicted outputs are discrete pressure classes; to visualize them as continuous heatmaps, we map each predicted class to its corresponding mean pressure value and render the resulting per-location pressure field as a heatmap.
+                </p>
+                <div class="row text-center">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+                        <video width="90%" autoplay loop muted controls style="display:block; margin: 0 auto;">
+                            <source src="assets/videos/Comparisions_videos/1_compat.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        <video width="90%" autoplay loop muted controls style="display:block; margin: 0 auto;">
+                            <source src="assets/videos/Comparisions_videos/2_compat.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        <video width="90%" autoplay loop muted controls style="display:block; margin: 0 auto;">
+                            <source src="assets/videos/Comparisions_videos/3_compat.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        <video width="90%" autoplay loop muted controls style="display:block; margin: 0 auto;">
+                            <source src="assets/videos/Comparisions_videos/4_compat.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        <video width="90%" autoplay loop muted controls style="display:block; margin: 0 auto;">
+                            <source src="assets/videos/Comparisions_videos/5_compat.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
             </div>
         </div>
 
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h3 style="font-weight: bold;">
-                    B. Training Loss
-                </h3> 
+                <h3 style="font-weight: bold;"> 
+                    D. Bare Hand Setting Results
+                </h3>
                 <p class="text-justify">
-                    <p>
-                        As illustrated in Figure 2 (a), the model is trained end-to-end with a reconstruction loss. 
-                        The loss is optimized over the trainable parameters of the UNet, Vertex Encoder, and PoseNet. 
-                        To enhance the physical plausibility of the output, we introduce a UV mask as a spatial prior. 
-                        This mask compels the model to prioritize reconstruction accuracy within the valid hand region defined by the UV map.
-                        The training objective is formulated as a weighted mean squared error:
-                        \[
-                        \mathcal{L} = \mathbb{E}_{\varepsilon}\left(\left\|\left(z_{gt}-z_{\varepsilon}\right)\odot\left(1+\mathbf{M}_{uv}\right)\right\|^2\right),
-                        \]
-                        where <b>z<sub>gt</sub></b> is the ground truth latent, <b>z<sub>ε</sub></b> is the denoised latent, and <b>M<sub>uv</sub></b> is the binary UV mask.
-                    </p>                        
+                The videos below showcase pressure generation by <strong>EgoPressureDiff</strong> in the bare-hand setting, demonstrating its ability to synthesize temporally coherent, anatomically plausible hand-pressure patterns conditioned on egocentric observations when the pressure glove is not visible.
                 </p>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="50%">
+                                <!-- Header row above the left video -->
+                                <div style="display: flex; width: 99%; margin: 0 auto 6px auto;">
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">Ground Truth</div>
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">Input Video</div>
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">EgoPressureDiff</div>
+                                </div>
+
+                                <video id="v0" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/bare_hand_testset/1_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="50%">
+                                <!-- Header row above the left video -->
+                                <div style="display: flex; width: 99%; margin: 0 auto 6px auto;">
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">Ground Truth</div>
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">Input Video</div>
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">EgoPressureDiff</div>
+                                </div>
+
+                                <video id="v1" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/bare_hand_testset/2_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v2" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/bare_hand_testset/3_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v3" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/bare_hand_testset/4_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v4" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/bare_hand_testset/7_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v5" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/bare_hand_testset/6_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
 
 
-        <div class="row"> 
+
+
+
+        <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h3 style="font-weight: bold;">
-                    C. Qualitative Comparison
+                <h3 style="font-weight: bold;"> 
+                E. In The Wild Results
                 </h3>
                 <p class="text-justify">
-                    Figure 4 presents a qualitative comparison across different methods.
-                    The first row illustrates a scenario where the middle finger makes contact with the surface while the index finger does not, as confirmed by the side view. 
-                    Baseline methods erroneously predict pressure on the non-contacting index finger. In contrast, our method, which incorporates depth, hand geometry and temporal information, 
-                    yields the correct prediction.
-                    As highlighted in the red box in the second row, our diffusion-based model generates a UV-pressure map with smoother pressure transitions, closely aligning with the ground truth. 
-                    This is because baseline methods typically quantize pressure into a fixed number of classes (e.g., nine) and treat the problem as a pixel-wise classification task, 
-                    resulting in coarse pressure gradients.
-                    Overall, our method demonstrates superior performance in terms of both the accuracy of the contact regions and the fidelity of the pressure distribution.
+                The videos below present pressure generation results from <strong>EgoPressureDiff</strong> in an in-the-wild, uncontrolled environment, illustrating its robustness to real-world variations in illumination, background clutter, and hand–object interaction dynamics while maintaining coherent, physically plausible pressure patterns.
                 </p>
 
-                <br>
-                    <img width="95%" src="assets/Comparison.png" class="img-responsive" alt="pipeline" style="margin:auto">
-                    <p style="margin-top: 5px; font-size: 14px; color: #555; text-align: left;">
-                        <strong>Figure 4:</strong> Qualitative comparison on the EgoPressure dataset. The "Ego View" serves as the input, 
-                        while the "Side View" is provided to better illustrate the hand's contact with the touchpad. 
-                        The first row shows a case where only the middle finger is in contact and only our method predicts this correctly. 
-                        In the second row, magnified results of the palm (red box) demonstrate that our method produces smoother pressure transitions, more closely aligning with the ground truth (GT).
-                    </p>
-                <br>
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v0" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/1_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v1" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/2_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v2" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/3_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v3" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/4_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v4" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/5_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v5" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/6_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v6" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/7_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v7" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/8_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v8" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/9_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v9" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/10_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v10" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/11_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v11" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/12_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v12" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/13_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v13" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/14_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v14" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset/15_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
             </div>
         </div>
 
 
-        <div class="row"> 
+
+
+
+
+        <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h3 style="font-weight: bold;">
-                    D. Video Results
+                <h3 style="font-weight: bold;"> 
+                E. In The Wild Results on Unseen Objects
                 </h3>
                 <p class="text-justify">
-                    We present the raw UV-pressure maps generated by EgoPressDiff, along with their corresponding visualizations projected onto the 3D MANO hand model.
+                The video below shows <strong>EgoPressureDiff</strong> generating hand-pressure patterns for previously unseen objects in an uncontrolled, in-the-wild setting (an egg, a nutcracker figurine, and jasmine green tea). Notably, the model remains robust under this out-of-distribution object shift, producing temporally consistent and anatomically plausible pressure maps that qualitatively align with the expected grasp strategies induced by each object’s geometry and handling requirements.
                 </p>
 
-
-                <h4 style="font-weight: bold;">
-                    case 1:
-                    <p class="text-justify">
-                        <!-- 以下示例展示了我们的方法对手部不同部位所受压力图像的生成效果，可以看到生成的压力图像在时间上保持了较好的连续性，并且能够准确反映手部与触摸板接触的区域和压力分布。 -->
-                        Example results of our method for generating pressure maps on different regions of the hand. 
-                        The generated pressure maps maintain good temporal continuity and accurately capture the contact areas and pressure distribution between the hand and the touchpad.
-                    </p>
-                </h4>
-                <div class="row text-center">
-                    <div class="row">
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_019_grasp-edge_uncurled_thumb-down_5x_right-01.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_019_grasp-edge_uncurled_thumb-down_5x_right-02.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_019_press_palm_high_x5_left-01.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_019_press_palm_high_x5_left-01.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_019_grasp-edge_curled_thumb-down_5x_right-01.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_019_grasp-edge_curled_thumb-down_5x_right-02.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_019_press_palm-and-fingers_high_x5_right-01.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_019_press_palm-and-fingers_high_x5_right-02.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v0" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset-unseen/1_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v1" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset-unseen/2_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="33%">
+                                <video id="v2" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/wild_testset-unseen/3_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
-                <h4 style="font-weight: bold;">
-                    case 2: 
-                    <p class="text-justify">
-                        <!-- 以下示例展示了在同一个手势动作下，手部施加的压力大小和手部与触摸板接触的区域不同的情况下，我们的方法生成的压力图像。可以看到，随着手部施加压力的变化，生成的压力图像中接触区域的颜色和分布也发生了相应的变化，反映了不同的压力值和接触模式。 -->
-                        Example results under the same gesture with varying contact regions and pressure levels. 
-                        As the applied pressure changes, the generated pressure maps reflect corresponding variations in color and distribution, indicating different pressure values and contact patterns.
-                    </p>
-                </h4>
-                <div class="row text-center">
-                    <div class="row">
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_021_press_fingers_high_5x_right-01.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_021_press_fingers_high_5x_right-02.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_021_push-away_5x_left-01.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_021_push-away_5x_left-02.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                </div>
 
-                <h4 style="font-weight: bold;">
-                    case 3: 
-                    <p class="text-justify">
-                        <!-- 以下示例展示了我们方法的长视频生成效果，在一个较为完整的手势动作过程中，手部与触摸板的接触区域和压力分布随着手部动作变化而变化。可以看到，生成的压力图像在时间上保持了较好的连续性，并且能够准确反映手部与触摸板接触的区域和压力分布。 -->
-                        Example results of long video generation with our method. During a complete gesture, the contact areas and pressure distribution between the hand and the touchpad change over time. 
-                        The generated pressure maps maintain good temporal continuity and accurately capture these dynamic variations.
-                    </p>
-                </h4>
-                <div class="row text-center">
-                    <div class="row">
-                        <video id="comparison-video" width="60%" autoplay loop muted controls>
-                            <source src="assets/videos/Generated_videos/p_020_press_cupped_onebyone_high_3x_right-01.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                </div>
-
+            </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
