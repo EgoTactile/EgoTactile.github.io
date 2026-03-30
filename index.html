@@ -496,7 +496,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3 style="font-weight: bold;"> 
-                E. In The Wild Results on Unseen Objects
+                F. In The Wild Results on Unseen Objects
                 </h3>
                 <p class="text-justify">
                 The video below shows <strong>EgoPressureDiff</strong> generating hand-pressure patterns for previously unseen objects in an uncontrolled, in-the-wild setting (an egg, a nutcracker figurine, and jasmine green tea). Notably, the model remains robust under this out-of-distribution object shift, producing temporally consistent and anatomically plausible pressure maps that qualitatively align with the expected grasp strategies induced by each object’s geometry and handling requirements.
@@ -532,8 +532,99 @@
 
 
 
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3 style="font-weight: bold;"> 
+                    G. Results on Unseen Grasp and Interaction Patterns
+                </h3>
+                <p class="text-justify">
+                The videos below demonstrate the performance of <strong>EgoPressureDiff</strong> on unseen grasp and interaction patterns. While EgoPressureDiff can still produce coarse pressure predictions for grasping actions during the interaction process, it struggles with entirely unfamiliar interaction modes. In the future, we plan to incorporate hand pose and object 6D pose information into the modeling process, which should further enhance the model's pressure prediction capabilities on unseen patterns.
+                </p>
 
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="50%">
+                                <!-- Header row above the left video -->
+                                <div style="display: flex; width: 99%; margin: 0 auto 6px auto;">
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">Ground Truth</div>
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">Input Video</div>
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">EgoPressureDiff</div>
+                                </div>
 
+                                <video id="v0" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/unseen_patterns/1_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="50%">
+                                <!-- Header row above the left video -->
+                                <div style="display: flex; width: 99%; margin: 0 auto 6px auto;">
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">Ground Truth</div>
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">Input Video</div>
+                                    <div style="flex: 1; text-align: center; font-weight: bold;">EgoPressureDiff</div>
+                                </div>
+
+                                <video id="v1" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/unseen_patterns/2_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v2" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/unseen_patterns/3_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v3" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/unseen_patterns/4_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v4" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/unseen_patterns/5_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v5" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/unseen_patterns/6_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; text-align: center;">
+                    <table border="0" cellspacing="0" cellpadding="0" align="center" style="width: 100%;">
+                        <tr>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v4" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/unseen_patterns/7_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                            <td align="center" valign="middle" width="50%">
+                                <video id="v5" width="99%" autoplay loop muted controls>
+                                    <source src="assets/videos/unseen_patterns/8_compat.mp4" type="video/mp4" />
+                                </video>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
 
 
 
